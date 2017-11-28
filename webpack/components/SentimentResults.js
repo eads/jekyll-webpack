@@ -41,7 +41,7 @@ class SentimentResults extends Component {
       }
     });
 
-    var afinnScale = d3.scaleLinear().domain([-5,5]);
+    var afinnScale = d3.scaleLinear().domain([-10,10]);
 
     var afinnHistogram = d3.histogram()
         .value(function(d) { return d.afinn_sentiment; })
