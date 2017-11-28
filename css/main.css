@@ -1088,6 +1088,9 @@ body {
   .chartContainer h2 {
     text-align: center;
     font-size: 2.8rem; }
+  .chartContainer p {
+    font-size: 1.6rem;
+    text-align: center; }
 
 header {
   background-color: #fff;
