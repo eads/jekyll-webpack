@@ -10,6 +10,7 @@ class SentimentSearch extends Component {
     super(props);
     this.state = {
       searchString: '',
+      searchURL: '',
       results: [],
     }
   }
@@ -19,12 +20,13 @@ class SentimentSearch extends Component {
 
     axios.get(baseurl, {
       params: {
-        'q': this.state.searchString
+        'q': this.state.searchString,
+        'count': 100
       }
     })
       .then(res => {
-        console.log(res);
         this.setState({
+          searchURL: res.request.responseURL,
           results: res.data.results
         });
       });
@@ -43,8 +45,7 @@ class SentimentSearch extends Component {
           <input type="text" name="searchString" value={this.state.searchString} onChange={this.changeHandler.bind(this)} placeholder="Search terms, @names, #hashtags, and places" />
           <button type="submit">Search</button>
         </form>
-        <SentimentResults data={this.state.results} />
-        <div className="placeholder">PLACEHOLDER FOR RESULTS</div>
+        <SentimentResults data={this.state.results} url={this.state.searchURL} />
       </div>
     )
   }

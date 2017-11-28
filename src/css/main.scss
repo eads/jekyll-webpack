@@ -119,6 +119,23 @@ header {
   font-size: $scale8;
   font-family: $font-sans;
   margin: 3rem;
-  padding: 2rem;
+  padding: 1.5rem;
   background-color: #fff;
 }
+
+.download {
+  background-color: #fff;
+  box-shadow: 0 0 15px #999;
+  margin: 3rem;
+  padding: 2rem;
+  font-size: 2.5rem;
+  div {
+    margin: 2rem 0;
+  }
+  input {
+    width: 100%;
+    font-size: 1.5rem;
+  }
+}
+
+.tweets { display: none; }
