@@ -1082,6 +1082,13 @@ body {
     margin-bottom: 3rem;
     font-style: italic; }
 
+.chartContainer {
+  max-width: 105rem;
+  margin: 3rem auto; }
+  .chartContainer h2 {
+    text-align: center;
+    font-size: 2.8rem; }
+
 header {
   background-color: #fff;
   padding: 1rem 0;
@@ -1158,5 +1165,5 @@ header {
     width: 100%;
     font-size: 1.5rem; }
 
-.tweets, .chartContainer {
+.tweets {
   display: none; }
