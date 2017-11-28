@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import * as d3 from 'd3';
-
+import NumberFormat from 'react-number-format';
 
 const sampleData = [
       {name: 'Page A', uv: 4000, pv: 2400, amt: 2400},
@@ -91,36 +91,61 @@ class SentimentResults extends Component {
               </BarChart>
             </ResponsiveContainer>
           </div>
+
+          <p>Negative numbers are more negative, positive numbers are more positive.</p>
         </div>
 
         <div className="tweets">
-          {
-            data.map((tweet, index) => (
-              <div key={"container_" + index} className="tweet">
-                <p key={"username_" + index}>
-                  @{tweet.user.screen_name}
-                </p>
-                <p key={"text_" + index}>
-                  {tweet.text}
-                </p>
-                <p key={"afinn_" + index}>
-                  AFINN: {tweet.afinn_sentiment}
-                </p>
-                <p key={"vadercompound_" + index}>
-                  VADER compound: {tweet.vader_sentiment.compound}
-                </p>
-                <p key={"vaderneu_" + index}>
-                  VADER neu: {tweet.vader_sentiment.neu}
-                </p>
-                <p key={"vaderpos_" + index}>
-                  VADER pos: {tweet.vader_sentiment.pos}
-                </p>
-                <p key={"vaderneg_" + index}>
-                  VADER neg: {tweet.vader_sentiment.neg}
-                </p>
-              </div>
-            ))
-          }
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Verified</th>
+                <th>Text</th>
+                <th>AFINN</th>
+                <th>VADER compound</th>
+                <th>VADER neu</th>
+                <th>VADER pos</th>
+                <th>VADER neg</th>
+              </tr>
+            </thead>
+            <tbody>
+            {
+              data.map((tweet, index) => (
+                <tr key={"container_" + index} className="tweet">
+                  <td key={"id_" + index}>
+                    <a href={"https://twitter.com/i/web/status/" + tweet.id_str} target="_blank">{tweet.id_str}</a>
+                  </td>
+                  <td key={"username_" + index}>
+                    @{tweet.user.screen_name}
+                  </td>
+                  <td key={"verified_" + index}>
+                    {tweet.user.verified ? 'true' : 'false'}
+                  </td>
+                  <td key={"text_" + index}>
+                    {tweet.text}
+                  </td>
+                  <td className="numeric" key={"afinn_" + index}>
+                    <NumberFormat value={tweet.afinn_sentiment} displayType={'text'} fixedDecimalScale={true} decimalScale={2} />
+                  </td>
+                  <td className="numeric" key={"vadercompound_" + index}>
+                    <NumberFormat value={tweet.vader_sentiment.compound} displayType={'text'} fixedDecimalScale={true} decimalScale={2} />
+                  </td>
+                  <td className="numeric" key={"vaderneu_" + index}>
+                    <NumberFormat value={tweet.vader_sentiment.neu} displayType={'text'} fixedDecimalScale={true} decimalScale={2} />
+                  </td>
+                  <td className="numeric" key={"vaderpos_" + index}>
+                    <NumberFormat value={tweet.vader_sentiment.pos} displayType={'text'} fixedDecimalScale={true} decimalScale={2} />
+                  </td>
+                  <td className="numeric" key={"vaderneg_" + index}>
+                    <NumberFormat value={tweet.vader_sentiment.neg} displayType={'text'} fixedDecimalScale={true} decimalScale={2} />
+                  </td>
+                </tr>
+              ))
+            }
+            </tbody>
+          </table>
         </div>
       </div>
     )

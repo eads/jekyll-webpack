@@ -31,7 +31,7 @@ body {
 
 .content {
   max-width: 105rem;
-  margin: 0 auto;
+  margin: 2rem auto;
 
   h1 {
     font-size: $scale16;
@@ -122,13 +122,31 @@ header {
   border-bottom: 1px dotted #555;
 }
 
-.tweet {
-  font-size: $scale8;
+.tweets {
+  font-size: $scale6;
   font-family: $font-sans;
-  margin: 3rem;
-  padding: 1.5rem;
-  background-color: #fff;
+  .tweet {
+    margin: 3rem;
+    padding: 1.5rem;
+    background-color: #fff;
+  }
+
+
+  td {
+    padding: 1rem;
+    &.numeric {
+      text-align: right;
+    }
+  }
+
+  th {
+    background-color: #999;
+    color: #fff;
+    padding: 1rem;
+  }
 }
+
+
 
 .download {
   background-color: #fff;
@@ -144,8 +162,6 @@ header {
     font-size: 1.5rem;
   }
 }
-
-.tweets { display: none; }
 
 .recharts-text {
   font-family: Arial, sans-serif;

@@ -1075,7 +1075,7 @@ body {
 
 .content {
   max-width: 105rem;
-  margin: 0 auto; }
+  margin: 2rem auto; }
   .content h1 {
     font-size: 3.2rem;
     text-align: center;
@@ -1146,12 +1146,21 @@ header {
   border-top: 1px dotted #555;
   border-bottom: 1px dotted #555; }
 
-.tweet {
-  font-size: 1.6rem;
-  font-family: "Open Sans", "Helvetica Neue", "Helvetica", sans-serif;
-  margin: 3rem;
-  padding: 1.5rem;
-  background-color: #fff; }
+.tweets {
+  font-size: 1.2rem;
+  font-family: "Open Sans", "Helvetica Neue", "Helvetica", sans-serif; }
+  .tweets .tweet {
+    margin: 3rem;
+    padding: 1.5rem;
+    background-color: #fff; }
+  .tweets td {
+    padding: 1rem; }
+    .tweets td.numeric {
+      text-align: right; }
+  .tweets th {
+    background-color: #999;
+    color: #fff;
+    padding: 1rem; }
 
 .download {
   background-color: #fff;
@@ -1164,9 +1173,6 @@ header {
   .download input {
     width: 100%;
     font-size: 1.5rem; }
-
-.tweets {
-  display: none; }
 
 .recharts-text {
   font-family: Arial, sans-serif;
