@@ -61,7 +61,9 @@ class SentimentResults extends Component {
         <div className="row">
           <div className="chartContainer six columns">
             <h2>VADER Compound Distribution</h2>
-            <p>Avg: <NumberFormat value={summary.vader} displayType={'text'} fixedDecimalScale={true} decimalScale={3} /></p>
+            <p>
+              Median: <NumberFormat value={summary.vader.median} displayType={'text'} fixedDecimalScale={true} decimalScale={3} /> | Avg: <NumberFormat value={summary.vader.mean} displayType={'text'} fixedDecimalScale={true} decimalScale={3} />
+            </p>
             <ResponsiveContainer aspect={2}>
               <BarChart data={vaderHist}>
                 <XAxis dataKey="min"/>
@@ -74,7 +76,9 @@ class SentimentResults extends Component {
           </div>
           <div className="chartContainer six columns">
             <h2>AFINN Distribution</h2>
-            <p>Avg: <NumberFormat value={summary.afinn} displayType={'text'} fixedDecimalScale={true} decimalScale={3} /></p>
+            <p>
+              Median: <NumberFormat value={summary.afinn.median} displayType={'text'} fixedDecimalScale={true} decimalScale={3} /> | Avg: <NumberFormat value={summary.afinn.mean} displayType={'text'} fixedDecimalScale={true} decimalScale={3} />
+            </p>
             <ResponsiveContainer aspect={2}>
               <BarChart data={afinnHist}>
                 <XAxis dataKey="min"/>

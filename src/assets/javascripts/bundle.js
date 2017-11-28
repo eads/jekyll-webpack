@@ -50387,8 +50387,10 @@ var SentimentResults = function (_Component) {
             _react2.default.createElement(
               'p',
               null,
-              'Avg: ',
-              _react2.default.createElement(_reactNumberFormat2.default, { value: summary.vader, displayType: 'text', fixedDecimalScale: true, decimalScale: 3 })
+              'Median: ',
+              _react2.default.createElement(_reactNumberFormat2.default, { value: summary.vader.median, displayType: 'text', fixedDecimalScale: true, decimalScale: 3 }),
+              ' | Avg: ',
+              _react2.default.createElement(_reactNumberFormat2.default, { value: summary.vader.mean, displayType: 'text', fixedDecimalScale: true, decimalScale: 3 })
             ),
             _react2.default.createElement(
               _recharts.ResponsiveContainer,
@@ -50415,8 +50417,10 @@ var SentimentResults = function (_Component) {
             _react2.default.createElement(
               'p',
               null,
-              'Avg: ',
-              _react2.default.createElement(_reactNumberFormat2.default, { value: summary.afinn, displayType: 'text', fixedDecimalScale: true, decimalScale: 3 })
+              'Median: ',
+              _react2.default.createElement(_reactNumberFormat2.default, { value: summary.afinn.median, displayType: 'text', fixedDecimalScale: true, decimalScale: 3 }),
+              ' | Avg: ',
+              _react2.default.createElement(_reactNumberFormat2.default, { value: summary.afinn.mean, displayType: 'text', fixedDecimalScale: true, decimalScale: 3 })
             ),
             _react2.default.createElement(
               _recharts.ResponsiveContainer,
