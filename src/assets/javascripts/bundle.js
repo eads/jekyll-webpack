@@ -50311,15 +50311,32 @@ var SentimentResults = function (_Component) {
       var urlParts = this.props.url.split('?');
       var url = urlParts[0] + '/csv?' + urlParts[1];
 
-      var domainScale = d3.scaleLinear().domain([-1, 1]);
+      var vaderScale = d3.scaleLinear().domain([-1, 1]);
 
-      var histogram = d3.histogram().value(function (d) {
+      var vaderHistogram = d3.histogram().value(function (d) {
         return d.vader_sentiment.compound;
-      }).domain(domainScale.domain()).thresholds(domainScale.ticks(10));
+      }).domain(vaderScale.domain()).thresholds(vaderScale.ticks(10));
 
-      var bins = histogram(data);
+      var vaderBins = vaderHistogram(data);
 
-      var histData = bins.map(function (bin) {
+      var vaderHist = vaderBins.map(function (bin) {
+        var count = bin.length;
+        return {
+          'count': count,
+          'min': bin.x0,
+          'max': bin.x1
+        };
+      });
+
+      var afinnScale = d3.scaleLinear().domain([-5, 5]);
+
+      var afinnHistogram = d3.histogram().value(function (d) {
+        return d.afinn_sentiment;
+      }).domain(afinnScale.domain()).thresholds(afinnScale.ticks(10));
+
+      var afinnBins = afinnHistogram(data);
+
+      var afinnHist = afinnBins.map(function (bin) {
         var count = bin.length;
         return {
           'count': count,
@@ -50352,24 +50369,49 @@ var SentimentResults = function (_Component) {
         ),
         _react2.default.createElement(
           'div',
-          { className: 'chartContainer' },
+          { className: 'row' },
           _react2.default.createElement(
-            'h2',
-            null,
-            'Distribution'
+            'div',
+            { className: 'chartContainer six columns' },
+            _react2.default.createElement(
+              'h2',
+              null,
+              'VADER Compound Distribution'
+            ),
+            _react2.default.createElement(
+              _recharts.ResponsiveContainer,
+              { aspect: 2 },
+              _react2.default.createElement(
+                _recharts.BarChart,
+                { data: vaderHist },
+                _react2.default.createElement(_recharts.XAxis, { dataKey: 'min' }),
+                _react2.default.createElement(_recharts.YAxis, { domain: [0, 100] }),
+                _react2.default.createElement(_recharts.CartesianGrid, { strokeDasharray: '3 3' }),
+                _react2.default.createElement(_recharts.Tooltip, null),
+                _react2.default.createElement(_recharts.Bar, { dataKey: 'count', fill: '#1eaedb' })
+              )
+            )
           ),
           _react2.default.createElement(
-            _recharts.ResponsiveContainer,
-            { aspect: 3 },
+            'div',
+            { className: 'chartContainer six columns' },
             _react2.default.createElement(
-              _recharts.BarChart,
-              { width: 600, height: 300, data: histData,
-                margin: { top: 5, right: 30, left: 20, bottom: 5 } },
-              _react2.default.createElement(_recharts.XAxis, { dataKey: 'min' }),
-              _react2.default.createElement(_recharts.YAxis, null),
-              _react2.default.createElement(_recharts.CartesianGrid, { strokeDasharray: '3 3' }),
-              _react2.default.createElement(_recharts.Tooltip, null),
-              _react2.default.createElement(_recharts.Bar, { dataKey: 'count', fill: '#8884d8' })
+              'h2',
+              null,
+              'AFINN Distribution'
+            ),
+            _react2.default.createElement(
+              _recharts.ResponsiveContainer,
+              { aspect: 2 },
+              _react2.default.createElement(
+                _recharts.BarChart,
+                { data: afinnHist },
+                _react2.default.createElement(_recharts.XAxis, { dataKey: 'min' }),
+                _react2.default.createElement(_recharts.YAxis, { domain: [0, 100] }),
+                _react2.default.createElement(_recharts.CartesianGrid, { strokeDasharray: '3 3' }),
+                _react2.default.createElement(_recharts.Tooltip, null),
+                _react2.default.createElement(_recharts.Bar, { dataKey: 'count', fill: '#1eaedb' })
+              )
             )
           )
         ),

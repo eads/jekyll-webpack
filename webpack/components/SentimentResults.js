@@ -23,16 +23,16 @@ class SentimentResults extends Component {
     var urlParts = this.props.url.split('?');
     var url = urlParts[0] + '/csv?' + urlParts[1];
 
-    var domainScale = d3.scaleLinear().domain([-1,1]);
+    var vaderScale = d3.scaleLinear().domain([-1,1]);
 
-    var histogram = d3.histogram()
+    var vaderHistogram = d3.histogram()
         .value(function(d) { return d.vader_sentiment.compound; })
-        .domain(domainScale.domain())
-        .thresholds(domainScale.ticks(10));
+        .domain(vaderScale.domain())
+        .thresholds(vaderScale.ticks(10));
 
-    var bins = histogram(data);
+    var vaderBins = vaderHistogram(data);
 
-    var histData = bins.map( bin => {
+    var vaderHist = vaderBins.map( bin => {
       var count = bin.length;
       return {
         'count': count,
@@ -41,26 +41,57 @@ class SentimentResults extends Component {
       }
     });
 
+    var afinnScale = d3.scaleLinear().domain([-5,5]);
+
+    var afinnHistogram = d3.histogram()
+        .value(function(d) { return d.afinn_sentiment; })
+        .domain(afinnScale.domain())
+        .thresholds(afinnScale.ticks(10));
+
+    var afinnBins = afinnHistogram(data);
+
+    var afinnHist = afinnBins.map( bin => {
+      var count = bin.length;
+      return {
+        'count': count,
+        'min': bin.x0,
+        'max': bin.x1
+      }
+    });
+
+
     return (
       <div>
         <div className="download">
           <div><a href={url}>Download CSV</a> or copy link below:</div>
           <div><input type="text" readOnly={true} value={url}/></div>
         </div>
-        <div className="chartContainer">
-          <h2>Distribution</h2>
-          <ResponsiveContainer aspect={3}>
-            <BarChart width={600} height={300} data={histData}
-                  margin={{top: 5, right: 30, left: 20, bottom: 5}}>
-              <XAxis dataKey="min"/>
-              <YAxis/>
-              <CartesianGrid strokeDasharray="3 3"/>
-              <Tooltip/>
-              <Bar dataKey="count" fill="#8884d8" />
-            </BarChart>
-          </ResponsiveContainer>
+        <div className="row">
+          <div className="chartContainer six columns">
+            <h2>VADER Compound Distribution</h2>
+            <ResponsiveContainer aspect={2}>
+              <BarChart data={vaderHist}>
+                <XAxis dataKey="min"/>
+                <YAxis domain={[0, 100]}/>
+                <CartesianGrid strokeDasharray="3 3"/>
+                <Tooltip/>
+                <Bar dataKey="count" fill="#1eaedb" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="chartContainer six columns">
+            <h2>AFINN Distribution</h2>
+            <ResponsiveContainer aspect={2}>
+              <BarChart data={afinnHist}>
+                <XAxis dataKey="min"/>
+                <YAxis domain={[0, 100]} />
+                <CartesianGrid strokeDasharray="3 3"/>
+                <Tooltip/>
+                <Bar dataKey="count" fill="#1eaedb" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
         </div>
-
 
         <div className="tweets">
           {
