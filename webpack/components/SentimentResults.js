@@ -4,7 +4,7 @@ class SentimentResults extends Component {
   render() {
     var data = this.props.data;
     var urlParts = this.props.url.split('?');
-    var url = urlParts[0] + '/csv' + urlParts[1];
+    var url = urlParts[0] + '/csv?' + urlParts[1];
 
     if (!data.length) {
       return <div></div>
