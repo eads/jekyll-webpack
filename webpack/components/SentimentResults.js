@@ -54,10 +54,6 @@ class SentimentResults extends Component {
 
     return (
       <div>
-        <div className="download">
-          <div><a href={url}>Download CSV</a> or copy link below:</div>
-          <div><input type="text" readOnly={true} value={url}/></div>
-        </div>
         <div className="row">
           <div className="chartContainer six columns">
             <h2>VADER Compound Distribution</h2>
@@ -92,7 +88,10 @@ class SentimentResults extends Component {
 
           <p>Negative numbers are more negative, positive numbers are more positive.</p>
         </div>
-
+        <div className="download">
+          <div><a href={url}>Download CSV</a> or copy link below:</div>
+          <div><input type="text" readOnly={true} value={url}/></div>
+        </div>
         <div className="tweets">
           <table>
             <thead>

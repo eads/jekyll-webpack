@@ -50356,25 +50356,6 @@ var SentimentResults = function (_Component) {
         null,
         _react2.default.createElement(
           'div',
-          { className: 'download' },
-          _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement(
-              'a',
-              { href: url },
-              'Download CSV'
-            ),
-            ' or copy link below:'
-          ),
-          _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement('input', { type: 'text', readOnly: true, value: url })
-          )
-        ),
-        _react2.default.createElement(
-          'div',
           { className: 'row' },
           _react2.default.createElement(
             'div',
@@ -50440,6 +50421,25 @@ var SentimentResults = function (_Component) {
             'p',
             null,
             'Negative numbers are more negative, positive numbers are more positive.'
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'download' },
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              'a',
+              { href: url },
+              'Download CSV'
+            ),
+            ' or copy link below:'
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', { type: 'text', readOnly: true, value: url })
           )
         ),
         _react2.default.createElement(
