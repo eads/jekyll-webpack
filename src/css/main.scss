@@ -41,7 +41,14 @@ body {
   }
 }
 
-
+.chartContainer {
+  max-width: 105rem;
+  margin: 3rem auto;
+  h2 {
+    text-align: center;
+    font-size: $scale14;
+  }
+}
 
 
 header {
@@ -138,4 +145,4 @@ header {
   }
 }
 
-.tweets, .chartContainer { display: none; }
+.tweets { display: none; }

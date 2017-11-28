@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend, Tooltip } from 'recharts';
-import * as jStat from 'jStat';
+import * as d3 from 'd3';
 
 
 const sampleData = [
@@ -16,12 +16,31 @@ const sampleData = [
 class SentimentResults extends Component {
   render() {
     var data = this.props.data;
-    var urlParts = this.props.url.split('?');
-    var url = urlParts[0] + '/csv?' + urlParts[1];
-
     if (!data.length) {
       return <div></div>
     }
+
+    var urlParts = this.props.url.split('?');
+    var url = urlParts[0] + '/csv?' + urlParts[1];
+
+    var domainScale = d3.scaleLinear().domain([-1,1]);
+
+    var histogram = d3.histogram()
+        .value(function(d) { return d.vader_sentiment.compound; })
+        .domain(domainScale.domain())
+        .thresholds(domainScale.ticks(10));
+
+    var bins = histogram(data);
+
+    var histData = bins.map( bin => {
+      var count = bin.length;
+      return {
+        'count': count,
+        'min': bin.x0,
+        'max': bin.x1
+      }
+    });
+
     return (
       <div>
         <div className="download">
@@ -29,16 +48,15 @@ class SentimentResults extends Component {
           <div><input type="text" readOnly={true} value={url}/></div>
         </div>
         <div className="chartContainer">
+          <h2>Distribution</h2>
           <ResponsiveContainer aspect={3}>
-            <BarChart width={600} height={300} data={sampleData}
+            <BarChart width={600} height={300} data={histData}
                   margin={{top: 5, right: 30, left: 20, bottom: 5}}>
-              <XAxis dataKey="name"/>
+              <XAxis dataKey="min"/>
               <YAxis/>
               <CartesianGrid strokeDasharray="3 3"/>
               <Tooltip/>
-              <Legend />
-              <Bar dataKey="pv" fill="#8884d8" />
-              <Bar dataKey="uv" fill="#82ca9d" />
+              <Bar dataKey="count" fill="#8884d8" />
             </BarChart>
           </ResponsiveContainer>
         </div>
