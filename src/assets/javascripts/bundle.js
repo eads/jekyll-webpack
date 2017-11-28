@@ -49309,7 +49309,8 @@ var SentimentSearch = function (_Component) {
     _this.state = {
       searchString: '',
       searchURL: '',
-      results: []
+      results: [],
+      summary: {}
     };
     return _this;
   }
@@ -49329,7 +49330,8 @@ var SentimentSearch = function (_Component) {
       }).then(function (res) {
         _this2.setState({
           searchURL: res.request.responseURL,
-          results: res.data.results
+          results: res.data.results,
+          summary: res.data.summary
         });
       });
     }
@@ -49356,7 +49358,7 @@ var SentimentSearch = function (_Component) {
             'Search'
           )
         ),
-        _react2.default.createElement(_SentimentResults2.default, { data: this.state.results, url: this.state.searchURL })
+        _react2.default.createElement(_SentimentResults2.default, { data: this.state.results, summary: this.state.summary, url: this.state.searchURL })
       );
     }
   }]);
@@ -50293,8 +50295,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var sampleData = [{ name: 'Page A', uv: 4000, pv: 2400, amt: 2400 }, { name: 'Page B', uv: 3000, pv: 1398, amt: 2210 }, { name: 'Page C', uv: 2000, pv: 9800, amt: 2290 }, { name: 'Page D', uv: 2780, pv: 3908, amt: 2000 }, { name: 'Page E', uv: 1890, pv: 4800, amt: 2181 }, { name: 'Page F', uv: 2390, pv: 3800, amt: 2500 }, { name: 'Page G', uv: 3490, pv: 4300, amt: 2100 }];
-
 var SentimentResults = function (_Component) {
   _inherits(SentimentResults, _Component);
 
@@ -50308,6 +50308,8 @@ var SentimentResults = function (_Component) {
     key: 'render',
     value: function render() {
       var data = this.props.data;
+      var summary = this.props.summary;
+
       if (!data.length) {
         return _react2.default.createElement('div', null);
       }
@@ -50383,6 +50385,12 @@ var SentimentResults = function (_Component) {
               'VADER Compound Distribution'
             ),
             _react2.default.createElement(
+              'p',
+              null,
+              'Avg: ',
+              _react2.default.createElement(_reactNumberFormat2.default, { value: summary.vader, displayType: 'text', fixedDecimalScale: true, decimalScale: 3 })
+            ),
+            _react2.default.createElement(
               _recharts.ResponsiveContainer,
               { aspect: 2 },
               _react2.default.createElement(
@@ -50403,6 +50411,12 @@ var SentimentResults = function (_Component) {
               'h2',
               null,
               'AFINN Distribution'
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              'Avg: ',
+              _react2.default.createElement(_reactNumberFormat2.default, { value: summary.afinn, displayType: 'text', fixedDecimalScale: true, decimalScale: 3 })
             ),
             _react2.default.createElement(
               _recharts.ResponsiveContainer,

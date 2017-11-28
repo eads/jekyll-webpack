@@ -12,6 +12,7 @@ class SentimentSearch extends Component {
       searchString: '',
       searchURL: '',
       results: [],
+      summary: {},
     }
   }
 
@@ -27,7 +28,8 @@ class SentimentSearch extends Component {
       .then(res => {
         this.setState({
           searchURL: res.request.responseURL,
-          results: res.data.results
+          results: res.data.results,
+          summary: res.data.summary
         });
       });
   }
@@ -45,7 +47,7 @@ class SentimentSearch extends Component {
           <input type="text" name="searchString" value={this.state.searchString} onChange={this.changeHandler.bind(this)} placeholder="Search terms, @names, #hashtags, and places" />
           <button type="submit">Search</button>
         </form>
-        <SentimentResults data={this.state.results} url={this.state.searchURL} />
+        <SentimentResults data={this.state.results} summary={this.state.summary} url={this.state.searchURL} />
       </div>
     )
   }
