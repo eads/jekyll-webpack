@@ -1143,5 +1143,20 @@ header {
   font-size: 1.6rem;
   font-family: "Open Sans", "Helvetica Neue", "Helvetica", sans-serif;
   margin: 3rem;
-  padding: 2rem;
+  padding: 1.5rem;
   background-color: #fff; }
+
+.download {
+  background-color: #fff;
+  box-shadow: 0 0 15px #999;
+  margin: 3rem;
+  padding: 2rem;
+  font-size: 2.5rem; }
+  .download div {
+    margin: 2rem 0; }
+  .download input {
+    width: 100%;
+    font-size: 1.5rem; }
+
+.tweets {
+  display: none; }
