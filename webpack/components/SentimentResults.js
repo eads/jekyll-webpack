@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import * as d3 from 'd3';
+import * as _ from 'lodash';
 import NumberFormat from 'react-number-format';
+
+import ReactTable from "react-table";
+import "react-table/react-table.css";
+
+const csvbaseurl = "https://ffkouyywjc.execute-api.us-east-1.amazonaws.com/dev/search/csv"
 
 class SentimentResults extends Component {
   render() {
@@ -13,21 +19,24 @@ class SentimentResults extends Component {
     }
 
     var urlParts = this.props.url.split('?');
-    var url = urlParts[0] + '/csv?' + urlParts[1];
+    var url =  csvbaseurl + '?' + urlParts[1];
 
     var vaderScale = d3.scaleLinear().domain([-1,1]);
 
     var vaderHistogram = d3.histogram()
-        .value(function(d) { return d.vader_sentiment.compound; })
+        .value(function(d) { return d.vader_sentiment_compound; })
         .domain(vaderScale.domain())
-        .thresholds(vaderScale.ticks(10));
+        .thresholds(vaderScale.ticks(20));
 
     var vaderBins = vaderHistogram(data);
+
+    var vaderSum = vaderBins.reduce((accumulator, d) => accumulator + d.length, 0)
 
     var vaderHist = vaderBins.map( bin => {
       var count = bin.length;
       return {
         'count': count,
+        'pct': count / vaderSum * 100,
         'min': bin.x0,
         'max': bin.x1
       }
@@ -38,112 +47,116 @@ class SentimentResults extends Component {
     var afinnHistogram = d3.histogram()
         .value(function(d) { return d.afinn_sentiment; })
         .domain(afinnScale.domain())
-        .thresholds(afinnScale.ticks(10));
+        .thresholds(afinnScale.ticks(20));
 
     var afinnBins = afinnHistogram(data);
+
+    var afinnSum = afinnBins.reduce((accumulator, d) => accumulator + d.length, 0)
 
     var afinnHist = afinnBins.map( bin => {
       var count = bin.length;
       return {
         'count': count,
+        'pct': count / afinnSum * 100,
         'min': bin.x0,
         'max': bin.x1
       }
     });
 
+    var maxpct = _.maxBy(
+          [
+            _.maxBy(vaderHist, (d) => d.pct),
+            _.maxBy(afinnHist, (d) => d.pct)
+          ], (d) => d.pct).pct + 5;
 
     return (
       <div>
+        <div className="download">
+          <div><a href={url}>Download CSV</a> or copy link <input type="text" readOnly={true} value={url}/></div>
+        </div>
         <div className="row">
           <div className="chartContainer six columns">
             <h2>VADER Compound Distribution</h2>
             <p>
-              Median: <NumberFormat value={summary.vader.median} displayType={'text'} fixedDecimalScale={true} decimalScale={3} /> | Avg: <NumberFormat value={summary.vader.mean} displayType={'text'} fixedDecimalScale={true} decimalScale={3} />
+              Median: <NumberFormat value={summary.vader.median} displayType={'text'} fixedDecimalScale={true} decimalScale={3} /> | Avg: <NumberFormat value={summary.vader.mean} displayType={'text'} fixedDecimalScale={true} decimalScale={3.5} />
             </p>
-            <ResponsiveContainer aspect={2}>
+            <ResponsiveContainer aspect={3.5}>
               <BarChart data={vaderHist}>
                 <XAxis dataKey="min"/>
-                <YAxis domain={[0, 100]}/>
+                <YAxis 
+                  domain={[0, maxpct]}
+                  tickFormatter={(t) => t.toFixed(0) + '%'}
+                />
                 <CartesianGrid strokeDasharray="3 3"/>
-                <Tooltip/>
-                <Bar dataKey="count" fill="#1eaedb" />
+                <Bar dataKey="pct" fill="#1eaedb" />
               </BarChart>
             </ResponsiveContainer>
           </div>
           <div className="chartContainer six columns">
             <h2>AFINN Distribution</h2>
             <p>
-              Median: <NumberFormat value={summary.afinn.median} displayType={'text'} fixedDecimalScale={true} decimalScale={3} /> | Avg: <NumberFormat value={summary.afinn.mean} displayType={'text'} fixedDecimalScale={true} decimalScale={3} />
+              Median: <NumberFormat value={summary.afinn.median} displayType={'text'} fixedDecimalScale={true} decimalScale={3} /> | Avg: <NumberFormat value={summary.afinn.mean} displayType={'text'} fixedDecimalScale={true} decimalScale={3.5} />
             </p>
-            <ResponsiveContainer aspect={2}>
+            <ResponsiveContainer aspect={3.5}>
               <BarChart data={afinnHist}>
                 <XAxis dataKey="min"/>
-                <YAxis domain={[0, 100]} />
+                <YAxis
+                  domain={[0, maxpct]}
+                  tickFormatter={(t) => t.toFixed(0) + '%'}
+                />
                 <CartesianGrid strokeDasharray="3 3"/>
-                <Tooltip/>
-                <Bar dataKey="count" fill="#1eaedb" />
+                <Bar dataKey="pct" fill="#1eaedb" />
               </BarChart>
             </ResponsiveContainer>
           </div>
+        </div>
 
-          <p>Negative numbers are more negative, positive numbers are more positive.</p>
-        </div>
-        <div className="download">
-          <div><a href={url}>Download CSV</a> or copy link below:</div>
-          <div><input type="text" readOnly={true} value={url}/></div>
-        </div>
-        <div className="tweets">
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Username</th>
-                <th>Verified</th>
-                <th>Text</th>
-                <th>AFINN</th>
-                <th>VADER compound</th>
-                <th>VADER neu</th>
-                <th>VADER pos</th>
-                <th>VADER neg</th>
-              </tr>
-            </thead>
-            <tbody>
-            {
-              data.map((tweet, index) => (
-                <tr key={"container_" + index} className="tweet">
-                  <td key={"id_" + index}>
-                    <a href={"https://twitter.com/i/web/status/" + tweet.id_str} target="_blank">{tweet.id_str}</a>
-                  </td>
-                  <td key={"username_" + index}>
-                    @{tweet.user.screen_name}
-                  </td>
-                  <td key={"verified_" + index}>
-                    {tweet.user.verified ? 'true' : 'false'}
-                  </td>
-                  <td key={"text_" + index}>
-                    {tweet.text}
-                  </td>
-                  <td className="numeric" key={"afinn_" + index}>
-                    <NumberFormat value={tweet.afinn_sentiment} displayType={'text'} fixedDecimalScale={true} decimalScale={2} />
-                  </td>
-                  <td className="numeric" key={"vadercompound_" + index}>
-                    <NumberFormat value={tweet.vader_sentiment.compound} displayType={'text'} fixedDecimalScale={true} decimalScale={2} />
-                  </td>
-                  <td className="numeric" key={"vaderneu_" + index}>
-                    <NumberFormat value={tweet.vader_sentiment.neu} displayType={'text'} fixedDecimalScale={true} decimalScale={2} />
-                  </td>
-                  <td className="numeric" key={"vaderpos_" + index}>
-                    <NumberFormat value={tweet.vader_sentiment.pos} displayType={'text'} fixedDecimalScale={true} decimalScale={2} />
-                  </td>
-                  <td className="numeric" key={"vaderneg_" + index}>
-                    <NumberFormat value={tweet.vader_sentiment.neg} displayType={'text'} fixedDecimalScale={true} decimalScale={2} />
-                  </td>
-                </tr>
-              ))
-            }
-            </tbody>
-          </table>
-        </div>
+        <ReactTable
+          data={data}
+          columns={[
+              {
+                Header: "ID",
+                accessor: "id",
+                sortable: false,
+                width: 70,
+                Cell: row => (
+                  <a target="_blank" href={"https://twitter.com/i/web/status/" + row.value}>{row.value}</a>
+                )
+              },
+              {
+                Header: "VADER",
+                accessor: "vader_sentiment_compound",
+                width: 100
+              },
+              {
+                Header: "AFINN",
+                accessor: "afinn_sentiment",
+                width: 100
+              },
+              {
+                Header: "Tweet text",
+                sortable: false,
+                accessor: "text"
+              },
+              {
+                Header: "@name",
+                accessor: "user_screen_name",
+                width: 140
+              },
+              {
+                Header: "Verified",
+                accessor: "user_verified",
+                width: 80
+              },
+              {
+                Header: "Created at",
+                accessor: "created_at",
+                width: 200
+              }
+          ]}
+          defaultPageSize={10}
+          className="-highlight"
+        />
       </div>
     )
   }

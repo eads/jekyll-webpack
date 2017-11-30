@@ -2,7 +2,7 @@ import axios from 'axios';
 import SentimentResults from './SentimentResults';
 import React, { Component } from 'react';
 
-const baseurl = "https://ffkouyywjc.execute-api.us-east-1.amazonaws.com/dev/search"
+const baseurl = "https://ffkouyywjc.execute-api.us-east-1.amazonaws.com/dev/search/simple"
 
 class SentimentSearch extends Component {
 
@@ -22,7 +22,7 @@ class SentimentSearch extends Component {
     axios.get(baseurl, {
       params: {
         'q': this.state.searchString,
-        'count': 100
+        'count': 2000
       }
     })
       .then(res => {
