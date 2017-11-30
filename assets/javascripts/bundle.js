@@ -49570,7 +49570,7 @@ var SentimentSearch = function (_Component) {
 
       _axios2.default.get(baseurl, {
         params: {
-          'q': this.state.searchString,
+          'q': this.state.searchString + ' AND -filter:retweets AND -filter:replies',
           'count': 2000
         }
       }).then(function (res) {
@@ -50746,7 +50746,14 @@ var SentimentResults = function (_Component) {
           }, {
             Header: "@name",
             accessor: "user_screen_name",
-            width: 140
+            width: 140,
+            Cell: function Cell(row) {
+              return _react2.default.createElement(
+                'a',
+                { target: '_blank', href: "https://twitter.com/" + row.value },
+                row.value
+              );
+            }
           }, {
             Header: "Verified",
             accessor: "user_verified",
