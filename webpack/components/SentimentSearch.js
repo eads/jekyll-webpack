@@ -21,7 +21,7 @@ class SentimentSearch extends Component {
 
     axios.get(baseurl, {
       params: {
-        'q': this.state.searchString,
+        'q': this.state.searchString + ' AND -filter:retweets AND -filter:replies',
         'count': 2000
       }
     })

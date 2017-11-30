@@ -141,7 +141,10 @@ class SentimentResults extends Component {
               {
                 Header: "@name",
                 accessor: "user_screen_name",
-                width: 140
+                width: 140,
+                Cell: row => (
+                  <a target="_blank" href={"https://twitter.com/" + row.value}>{row.value}</a>
+                )
               },
               {
                 Header: "Verified",
