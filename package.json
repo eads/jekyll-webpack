@@ -32,12 +32,17 @@
   },
   "dependencies": {
     "axios": "^0.17.0",
+    "css-loader": "^0.28.7",
     "d3": "^4.12.0",
     "histogramjs": "0.0.1",
     "jStat": "^1.7.1",
+    "lodash": "^4.17.4",
+    "react-data-grid": "^2.0.78",
     "react-number-format": "^3.0.2",
+    "react-table": "^6.7.4",
     "recharts": "^1.0.0-beta.5",
     "serverless": "^1.23.0",
+    "style-loader": "^0.19.0",
     "webpack": "^3.8.1"
   }
 }
