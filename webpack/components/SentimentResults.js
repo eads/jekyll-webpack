@@ -70,7 +70,7 @@ class SentimentResults extends Component {
           ], (d) => d.pct).pct + 5;
 
     return (
-      <div>
+      <div className={'searching-' + this.props.searching}>
         <div className="download">
           <div><a href={url}>Download CSV</a> or copy link <input type="text" readOnly={true} value={url}/></div>
         </div>

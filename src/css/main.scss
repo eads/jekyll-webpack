@@ -191,3 +191,37 @@ header {
     //color: #fff;
   }
 }
+
+.searching-true, .searching-false {
+   transition: opacity .75s ease-in-out;
+   -moz-transition: opacity .75s ease-in-out;
+   -webkit-transition: opacity .75s ease-in-out;
+}
+
+.searching-true {
+  opacity: 0.5;
+}
+
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+
+form {
+  position: relative;
+}
+
+form.searching-true:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  margin-left: -15px;
+  border-radius: 50%;
+  border: 4px solid #ccc;
+  border-top-color: #333;
+  animation: spinner .6s linear infinite;
+  z-index: 10;
+}

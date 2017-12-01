@@ -49556,7 +49556,8 @@ var SentimentSearch = function (_Component) {
       searchString: '',
       searchURL: '',
       results: [],
-      summary: {}
+      summary: {},
+      searching: false
     };
     return _this;
   }
@@ -49568,18 +49569,25 @@ var SentimentSearch = function (_Component) {
 
       e.preventDefault();
 
-      _axios2.default.get(baseurl, {
-        params: {
-          'q': this.state.searchString + ' AND -filter:retweets AND -filter:replies',
-          'count': 2000
-        }
-      }).then(function (res) {
-        _this2.setState({
-          searchURL: res.request.responseURL,
-          results: res.data.results,
-          summary: res.data.summary
-        });
+      this.setState({
+        searching: true
       });
+
+      setTimeout(function (x) {
+        _axios2.default.get(baseurl, {
+          params: {
+            'q': _this2.state.searchString + ' AND -filter:retweets AND -filter:replies',
+            'count': 20
+          }
+        }).then(function (res) {
+          _this2.setState({
+            searchURL: res.request.responseURL,
+            results: res.data.results,
+            summary: res.data.summary,
+            searching: false
+          });
+        });
+      }, 2000);
     }
   }, {
     key: 'changeHandler',
@@ -49596,7 +49604,7 @@ var SentimentSearch = function (_Component) {
         { className: 'sentiment-search' },
         _react2.default.createElement(
           'form',
-          { onSubmit: this.submitHandler.bind(this) },
+          { onSubmit: this.submitHandler.bind(this), className: 'searching-' + this.state.searching },
           _react2.default.createElement('input', { type: 'text', name: 'searchString', value: this.state.searchString, onChange: this.changeHandler.bind(this), placeholder: 'Search terms, @names, #hashtags, and places' }),
           _react2.default.createElement(
             'button',
@@ -49604,7 +49612,7 @@ var SentimentSearch = function (_Component) {
             'Search'
           )
         ),
-        _react2.default.createElement(_SentimentResults2.default, { data: this.state.results, summary: this.state.summary, url: this.state.searchURL })
+        _react2.default.createElement(_SentimentResults2.default, { data: this.state.results, summary: this.state.summary, url: this.state.searchURL, searching: this.state.searching })
       );
     }
   }]);
@@ -50629,7 +50637,7 @@ var SentimentResults = function (_Component) {
 
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'searching-' + this.props.searching },
         _react2.default.createElement(
           'div',
           { className: 'download' },

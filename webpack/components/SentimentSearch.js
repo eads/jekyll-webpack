@@ -13,25 +13,33 @@ class SentimentSearch extends Component {
       searchURL: '',
       results: [],
       summary: {},
+      searching: false
     }
   }
 
   submitHandler(e) {
     e.preventDefault();
 
+    this.setState({
+      searching: true
+    });
+
+    setTimeout(x => {
     axios.get(baseurl, {
       params: {
         'q': this.state.searchString + ' AND -filter:retweets AND -filter:replies',
-        'count': 2000
+        'count': 20
       }
     })
       .then(res => {
         this.setState({
           searchURL: res.request.responseURL,
           results: res.data.results,
-          summary: res.data.summary
+          summary: res.data.summary,
+          searching: false
         });
       });
+    }, 2000)
   }
 
   changeHandler(e) {
@@ -43,11 +51,11 @@ class SentimentSearch extends Component {
   render() {
     return (
       <div className="sentiment-search">
-        <form onSubmit={this.submitHandler.bind(this)}>
+        <form onSubmit={this.submitHandler.bind(this)} className={'searching-' + this.state.searching}>
           <input type="text" name="searchString" value={this.state.searchString} onChange={this.changeHandler.bind(this)} placeholder="Search terms, @names, #hashtags, and places" />
           <button type="submit">Search</button>
         </form>
-        <SentimentResults data={this.state.results} summary={this.state.summary} url={this.state.searchURL} />
+        <SentimentResults data={this.state.results} summary={this.state.summary} url={this.state.searchURL} searching={this.state.searching}/>
       </div>
     )
   }
