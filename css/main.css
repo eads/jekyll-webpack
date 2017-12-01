@@ -1602,9 +1602,9 @@ header {
     padding: 12px 8px; }
 
 .searching-true, .searching-false {
-  transition: opacity .75s ease-in-out;
-  -moz-transition: opacity .75s ease-in-out;
-  -webkit-transition: opacity .75s ease-in-out; }
+  transition: opacity .25s ease-in-out;
+  -moz-transition: opacity .25s ease-in-out;
+  -webkit-transition: opacity .25s ease-in-out; }
 
 .searching-true {
   opacity: 0.5; }
