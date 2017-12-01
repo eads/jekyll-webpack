@@ -49573,21 +49573,19 @@ var SentimentSearch = function (_Component) {
         searching: true
       });
 
-      setTimeout(function (x) {
-        _axios2.default.get(baseurl, {
-          params: {
-            'q': _this2.state.searchString + ' AND -filter:retweets AND -filter:replies',
-            'count': 20
-          }
-        }).then(function (res) {
-          _this2.setState({
-            searchURL: res.request.responseURL,
-            results: res.data.results,
-            summary: res.data.summary,
-            searching: false
-          });
+      _axios2.default.get(baseurl, {
+        params: {
+          'q': this.state.searchString + ' AND -filter:retweets AND -filter:replies',
+          'count': 1000
+        }
+      }).then(function (res) {
+        _this2.setState({
+          searchURL: res.request.responseURL,
+          results: res.data.results,
+          summary: res.data.summary,
+          searching: false
         });
-      }, 2000);
+      });
     }
   }, {
     key: 'changeHandler',

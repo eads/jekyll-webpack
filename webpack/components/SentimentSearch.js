@@ -24,11 +24,10 @@ class SentimentSearch extends Component {
       searching: true
     });
 
-    setTimeout(x => {
     axios.get(baseurl, {
       params: {
         'q': this.state.searchString + ' AND -filter:retweets AND -filter:replies',
-        'count': 20
+        'count': 1000
       }
     })
       .then(res => {
@@ -39,7 +38,6 @@ class SentimentSearch extends Component {
           searching: false
         });
       });
-    }, 2000)
   }
 
   changeHandler(e) {
