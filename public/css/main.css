@@ -389,7 +389,7 @@ template {
 [hidden] {
   display: none; }
 
-.sentiment-search form:after {
+.sentiment-search form .search-box:after {
   content: "";
   display: table;
   clear: both; }
@@ -1530,25 +1530,33 @@ header {
   max-width: 900px;
   margin: 0 auto;
   font-family: "Open Sans", "Helvetica Neue", "Helvetica", sans-serif; }
-  .sentiment-search form input, .sentiment-search form input:focus, .sentiment-search form button {
+  .sentiment-search form .search-box input, .sentiment-search form .search-box input:focus, .sentiment-search form .search-box button {
     float: left;
     border-radius: 1.2rem;
     border-width: 3px;
     border-color: #fff;
     padding: 2rem 1rem; }
-  .sentiment-search form input {
+  .sentiment-search form .search-box input {
     width: 80%;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     border-right: none;
     font-size: 2rem;
     margin-right: -3rem; }
-  .sentiment-search form button {
+  .sentiment-search form .search-box button {
     background-color: #66CD00;
     width: 20%;
     font-size: 1.2rem;
     color: #fff;
     line-height: 0; }
+  .sentiment-search form .search-options {
+    font-size: 1.5rem; }
+    .sentiment-search form .search-options input {
+      display: inline;
+      margin-right: 1rem; }
+    .sentiment-search form .search-options label {
+      display: inline;
+      font-weight: normal; }
 
 .placeholder {
   text-align: center;
