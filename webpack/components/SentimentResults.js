@@ -14,6 +14,11 @@ class SentimentResults extends Component {
   render() {
     var data = this.props.data;
     var summary = this.props.summary;
+    var error = this.props.error;
+
+    if (error) {
+      return (<div className="error">Error getting results. This usually means we have overheated the Twitter API. Try again in a few minutes.</div>)
+    }
 
     if (!data.length) {
       return <div></div>

@@ -239,4 +239,8 @@ form.searching-true:before {
   z-index: 10;
 }
 
-.total { text-align: center; }
+.total, .error { text-align: center; }
+
+.error {
+  color: red;
+}

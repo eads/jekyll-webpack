@@ -1638,5 +1638,8 @@ form.searching-true:before {
   animation: spinner .6s linear infinite;
   z-index: 10; }
 
-.total {
+.total, .error {
   text-align: center; }
+
+.error {
+  color: red; }

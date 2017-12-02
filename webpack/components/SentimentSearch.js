@@ -16,6 +16,7 @@ class SentimentSearch extends Component {
       searching: false,
       includeRetweets: false,
       includeReplies: true,
+      error: false
     }
   }
 
@@ -41,6 +42,12 @@ class SentimentSearch extends Component {
         'count': 1000
       }
     })
+      .catch(error => {
+        this.setState({
+          searching: false,
+          error: true
+        })
+      })
       .then(res => {
         this.setState({
           searchURL: res.request.responseURL,
@@ -90,7 +97,7 @@ class SentimentSearch extends Component {
             </div>
           </div>
         </form>
-        <SentimentResults data={this.state.results} summary={this.state.summary} url={this.state.searchURL} searching={this.state.searching}/>
+        <SentimentResults error={this.state.error} data={this.state.results} summary={this.state.summary} url={this.state.searchURL} searching={this.state.searching}/>
       </div>
     )
   }
