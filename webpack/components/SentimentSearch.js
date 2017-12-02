@@ -13,7 +13,9 @@ class SentimentSearch extends Component {
       searchURL: '',
       results: [],
       summary: {},
-      searching: false
+      searching: false,
+      includeRetweets: false,
+      includeReplies: true,
     }
   }
 
@@ -24,9 +26,18 @@ class SentimentSearch extends Component {
       searching: true
     });
 
+    var search = this.state.searchString;
+
+    if (!this.state.includeRetweets) {
+      search = search + ' AND -filter:retweets';
+    }
+    if (!this.state.includeReplies) {
+      search = search + ' AND -filter:replies';
+    }
+
     axios.get(baseurl, {
       params: {
-        'q': this.state.searchString + ' AND -filter:retweets AND -filter:replies',
+        'q': search,
         'count': 1000
       }
     })
@@ -46,12 +57,38 @@ class SentimentSearch extends Component {
     });
   }
 
+  toggleReplies() {
+    this.setState({
+      includeReplies: !this.state.includeReplies
+    });
+  }
+
+  toggleRetweets() {
+    this.setState({
+      includeRetweets: !this.state.includeRetweets
+    });
+  }
+
   render() {
+    var toggleReplies = this.toggleReplies.bind(this)
+    var toggleRetweets = this.toggleRetweets.bind(this)
     return (
       <div className="sentiment-search">
         <form onSubmit={this.submitHandler.bind(this)} className={'searching-' + this.state.searching}>
-          <input type="text" name="searchString" value={this.state.searchString} onChange={this.changeHandler.bind(this)} placeholder="Search terms, @names, #hashtags, and places" />
-          <button type="submit">Search</button>
+          <div className="search-box">
+            <input type="text" name="searchString" value={this.state.searchString} onChange={this.changeHandler.bind(this)} placeholder="Search terms, @names, #hashtags, and places" />
+            <button type="submit">Search</button>
+          </div>
+          <div className="search-options row">
+            <div className="three columns">
+              <input name="includeReplies" id="includeReplies" type="checkbox" checked={this.state.includeReplies} onChange={toggleReplies} />
+              <label>Include Replies</label>
+            </div>
+            <div className="three columns">
+              <input name="includeRetweets" id="includeRetweets" type="checkbox" checked={this.state.includeRetweets} onChange={toggleRetweets} />
+              <label>Include Retweets</label>
+            </div>
+          </div>
         </form>
         <SentimentResults data={this.state.results} summary={this.state.summary} url={this.state.searchURL} searching={this.state.searching}/>
       </div>

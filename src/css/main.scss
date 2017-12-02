@@ -91,29 +91,42 @@ header {
     max-width: 900px;
     margin: 0 auto;
     font-family: $font-sans;
-    @extend %clearfix;
-    input, input:focus, button {
-      float: left;
-      border-radius: 1.2rem;
-      border-width: 3px;
-      border-color: #fff;
-      padding: 2rem 1rem;
+    .search-box {
+      @extend %clearfix;
+      input, input:focus, button {
+        float: left;
+        border-radius: 1.2rem;
+        border-width: 3px;
+        border-color: #fff;
+        padding: 2rem 1rem;
+      }
+      input {
+        width: 80%;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-right: none;
+        font-size: $scale10;
+        margin-right: -3rem;
+        //height: $scale10;
+      }
+      button {
+        background-color: #66CD00;
+        width: 20%;
+        font-size: $scale6;
+        color: #fff;
+        line-height: 0;
+      }
     }
-    input {
-      width: 80%;
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-      border-right: none;
-      font-size: $scale10;
-      margin-right: -3rem;
-      //height: $scale10;
-    }
-    button {
-      background-color: #66CD00;
-      width: 20%;
-      font-size: $scale6;
-      color: #fff;
-      line-height: 0;
+    .search-options {
+      font-size: 1.5rem;
+      input {
+        display: inline;
+        margin-right: 1rem;
+      }
+      label {
+        display: inline;
+        font-weight: normal;
+      }
     }
   }
 }

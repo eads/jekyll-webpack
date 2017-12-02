@@ -112,7 +112,7 @@ class SentimentResults extends Component {
           </div>
         </div>
 
-        <p className="total">Total tweets: {this.props.data.length}</p>
+        <p className="total">Total tweets: {data.length}</p>
 
         <ReactTable
           data={data}
