@@ -37,6 +37,7 @@
     "histogramjs": "0.0.1",
     "jStat": "^1.7.1",
     "lodash": "^4.17.4",
+    "match-sorter": "^2.2.0",
     "react-data-grid": "^2.0.78",
     "react-number-format": "^3.0.2",
     "react-table": "^6.7.4",

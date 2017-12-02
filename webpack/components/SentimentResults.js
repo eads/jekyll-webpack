@@ -3,6 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend
 import * as d3 from 'd3';
 import * as _ from 'lodash';
 import NumberFormat from 'react-number-format';
+import matchSorter from 'match-sorter';
 
 import ReactTable from "react-table";
 import "react-table/react-table.css";
@@ -111,16 +112,21 @@ class SentimentResults extends Component {
           </div>
         </div>
 
+        <p className="total">Total tweets: {this.props.data.length}</p>
+
         <ReactTable
           data={data}
+          filterable
+          defaultFilterMethod={(filter, row) =>
+            String(row[filter.id]) === filter.value}
           columns={[
               {
                 Header: "ID",
-                accessor: "id",
+                accessor: "id_str",
                 sortable: false,
                 width: 70,
                 Cell: row => (
-                  <a target="_blank" href={"https://twitter.com/i/web/status/" + row.value}>{row.value}</a>
+                  <a target="_blank" href={"https://twitter.com/statuses/" + row.value}>{row.value}</a>
                 )
               },
               {
@@ -136,7 +142,10 @@ class SentimentResults extends Component {
               {
                 Header: "Tweet text",
                 sortable: false,
-                accessor: "text"
+                accessor: "text",
+                filterMethod: (filter, rows) =>
+                    matchSorter(rows, filter.value, { keys: ["text"] }),
+                filterAll: true
               },
               {
                 Header: "@name",
@@ -144,12 +153,37 @@ class SentimentResults extends Component {
                 width: 140,
                 Cell: row => (
                   <a target="_blank" href={"https://twitter.com/" + row.value}>{row.value}</a>
-                )
+                ),
+                filterMethod: (filter, rows) =>
+                    matchSorter(rows, filter.value, { keys: ["user_screen_name"] }),
+                filterAll: true
               },
               {
                 Header: "Verified",
                 accessor: "user_verified",
-                width: 80
+                width: 80,
+                Cell: row => (
+                  row.value === true ? "true" : "false"
+                ),
+                filterMethod: (filter, row) => {
+                  if (filter.value === "all") {
+                    return true;
+                  }
+                  if (filter.value === "true") {
+                    return row.user_verified;
+                  }
+                  return !row.user_verified;
+                },
+                Filter: ({ filter, onChange }) =>
+                  <select
+                    onChange={event => onChange(event.target.value)}
+                    style={{ width: "100%" }}
+                    value={filter ? filter.value : "all"}
+                  >
+                    <option value="all">Show all</option>
+                    <option value="true">Verified</option>
+                    <option value="false">Not verified</option>
+                  </select>
               },
               {
                 Header: "Created at",
