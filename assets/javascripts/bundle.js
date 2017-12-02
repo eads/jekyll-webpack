@@ -49557,7 +49557,9 @@ var SentimentSearch = function (_Component) {
       searchURL: '',
       results: [],
       summary: {},
-      searching: false
+      searching: false,
+      includeRetweets: false,
+      includeReplies: true
     };
     return _this;
   }
@@ -49573,9 +49575,18 @@ var SentimentSearch = function (_Component) {
         searching: true
       });
 
+      var search = this.state.searchString;
+
+      if (!this.state.includeRetweets) {
+        search = search + ' AND -filter:retweets';
+      }
+      if (!this.state.includeReplies) {
+        search = search + ' AND -filter:replies';
+      }
+
       _axios2.default.get(baseurl, {
         params: {
-          'q': this.state.searchString + ' AND -filter:retweets AND -filter:replies',
+          'q': search,
           'count': 1000
         }
       }).then(function (res) {
@@ -49595,19 +49606,63 @@ var SentimentSearch = function (_Component) {
       });
     }
   }, {
+    key: 'toggleReplies',
+    value: function toggleReplies() {
+      this.setState({
+        includeReplies: !this.state.includeReplies
+      });
+    }
+  }, {
+    key: 'toggleRetweets',
+    value: function toggleRetweets() {
+      this.setState({
+        includeRetweets: !this.state.includeRetweets
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var toggleReplies = this.toggleReplies.bind(this);
+      var toggleRetweets = this.toggleRetweets.bind(this);
       return _react2.default.createElement(
         'div',
         { className: 'sentiment-search' },
         _react2.default.createElement(
           'form',
           { onSubmit: this.submitHandler.bind(this), className: 'searching-' + this.state.searching },
-          _react2.default.createElement('input', { type: 'text', name: 'searchString', value: this.state.searchString, onChange: this.changeHandler.bind(this), placeholder: 'Search terms, @names, #hashtags, and places' }),
           _react2.default.createElement(
-            'button',
-            { type: 'submit' },
-            'Search'
+            'div',
+            { className: 'search-box' },
+            _react2.default.createElement('input', { type: 'text', name: 'searchString', value: this.state.searchString, onChange: this.changeHandler.bind(this), placeholder: 'Search terms, @names, #hashtags, and places' }),
+            _react2.default.createElement(
+              'button',
+              { type: 'submit' },
+              'Search'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'search-options row' },
+            _react2.default.createElement(
+              'div',
+              { className: 'three columns' },
+              _react2.default.createElement('input', { name: 'includeReplies', id: 'includeReplies', type: 'checkbox', checked: this.state.includeReplies, onChange: toggleReplies }),
+              _react2.default.createElement(
+                'label',
+                null,
+                'Include Replies'
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'three columns' },
+              _react2.default.createElement('input', { name: 'includeRetweets', id: 'includeRetweets', type: 'checkbox', checked: this.state.includeRetweets, onChange: toggleRetweets }),
+              _react2.default.createElement(
+                'label',
+                null,
+                'Include Retweets'
+              )
+            )
           )
         ),
         _react2.default.createElement(_SentimentResults2.default, { data: this.state.results, summary: this.state.summary, url: this.state.searchURL, searching: this.state.searching })
@@ -50731,7 +50786,7 @@ var SentimentResults = function (_Component) {
           'p',
           { className: 'total' },
           'Total tweets: ',
-          this.props.data.length
+          data.length
         ),
         _react2.default.createElement(_reactTable2.default, {
           data: data,
