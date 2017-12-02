@@ -49559,7 +49559,8 @@ var SentimentSearch = function (_Component) {
       summary: {},
       searching: false,
       includeRetweets: false,
-      includeReplies: true
+      includeReplies: true,
+      error: false
     };
     return _this;
   }
@@ -49589,6 +49590,11 @@ var SentimentSearch = function (_Component) {
           'q': search,
           'count': 1000
         }
+      }).catch(function (error) {
+        _this2.setState({
+          searching: false,
+          error: true
+        });
       }).then(function (res) {
         _this2.setState({
           searchURL: res.request.responseURL,
@@ -49665,7 +49671,7 @@ var SentimentSearch = function (_Component) {
             )
           )
         ),
-        _react2.default.createElement(_SentimentResults2.default, { data: this.state.results, summary: this.state.summary, url: this.state.searchURL, searching: this.state.searching })
+        _react2.default.createElement(_SentimentResults2.default, { error: this.state.error, data: this.state.results, summary: this.state.summary, url: this.state.searchURL, searching: this.state.searching })
       );
     }
   }]);
@@ -50632,6 +50638,15 @@ var SentimentResults = function (_Component) {
     value: function render() {
       var data = this.props.data;
       var summary = this.props.summary;
+      var error = this.props.error;
+
+      if (error) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'error' },
+          'Error getting results. This usually means we have overheated the Twitter API. Try again in a few minutes.'
+        );
+      }
 
       if (!data.length) {
         return _react2.default.createElement('div', null);
