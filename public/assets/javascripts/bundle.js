@@ -50898,6 +50898,51 @@ var SentimentResults = function (_Component) {
               );
             }
           }, {
+            Header: "Is media",
+            accessor: "is_media",
+            width: 80,
+            Cell: function Cell(row) {
+              return row.value === true ? "true" : "false";
+            },
+            filterMethod: function filterMethod(filter, row) {
+              if (filter.value === "all") {
+                return true;
+              }
+              if (filter.value === "true") {
+                return row.is_media;
+              }
+              return !row.is_media;
+            },
+            Filter: function Filter(_ref2) {
+              var filter = _ref2.filter,
+                  _onChange2 = _ref2.onChange;
+              return _react2.default.createElement(
+                'select',
+                {
+                  onChange: function onChange(event) {
+                    return _onChange2(event.target.value);
+                  },
+                  style: { width: "100%" },
+                  value: filter ? filter.value : "all"
+                },
+                _react2.default.createElement(
+                  'option',
+                  { value: 'all' },
+                  'Show all'
+                ),
+                _react2.default.createElement(
+                  'option',
+                  { value: 'true' },
+                  'Media'
+                ),
+                _react2.default.createElement(
+                  'option',
+                  { value: 'false' },
+                  'Not media/not known'
+                )
+              );
+            }
+          }, {
             Header: "Created at",
             accessor: "created_at",
             width: 200

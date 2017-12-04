@@ -191,6 +191,33 @@ class SentimentResults extends Component {
                   </select>
               },
               {
+                Header: "Is media",
+                accessor: "is_media",
+                width: 80,
+                Cell: row => (
+                  row.value === true ? "true" : "false"
+                ),
+                filterMethod: (filter, row) => {
+                  if (filter.value === "all") {
+                    return true;
+                  }
+                  if (filter.value === "true") {
+                    return row.is_media;
+                  }
+                  return !row.is_media;
+                },
+                Filter: ({ filter, onChange }) =>
+                  <select
+                    onChange={event => onChange(event.target.value)}
+                    style={{ width: "100%" }}
+                    value={filter ? filter.value : "all"}
+                  >
+                    <option value="all">Show all</option>
+                    <option value="true">Media</option>
+                    <option value="false">Not media/not known</option>
+                  </select>
+              },
+              {
                 Header: "Created at",
                 accessor: "created_at",
                 width: 200
