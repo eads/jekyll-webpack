@@ -27,7 +27,7 @@ If you'd like to modify this software for production use, we'd be delighted. See
 Created by:
 
 * Barbara Maseda
-* Mago Torres
+* [Mago Torres](https://twitter.com/magiccia)
 * Amy Shen
 * [David Eads](https://twitter.com/eads)
 
