@@ -75,6 +75,10 @@ class SentimentResults extends Component {
             _.maxBy(afinnHist, (d) => d.pct)
           ], (d) => d.pct).pct + 5;
 
+    var keywords = summary.keywords.map(word => {
+      return word[0] + ' (' + word[1] + ')';
+    }).join(', ');
+
     return (
       <div className={'searching-' + this.props.searching}>
         <div className="download">
@@ -117,7 +121,8 @@ class SentimentResults extends Component {
           </div>
         </div>
 
-        <p className="total">Total tweets: {data.length}</p>
+        <p className="total"><strong>Total tweets:</strong> {data.length}</p>
+        <p className="total"><strong>Keywords:</strong> {keywords}</p>
 
         <ReactTable
           data={data}

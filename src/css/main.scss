@@ -40,6 +40,18 @@ body {
     margin-bottom: 3rem;
     font-style: italic;
   }
+  h2 {
+    font-size: $scale12;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+    font-style: italic;
+    border-top: 1px solid #aaa;
+    padding-top: 1rem;
+  }
+
 }
 
 .chartContainer {

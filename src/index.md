@@ -12,7 +12,7 @@ In this first stage of **Twitter Sentiment Search** users can see the graphic re
 
 ## Warning: Not for production use
 
-_**Warning:** This is beta-quality software. Do not use it in a production or publication environment._
+**Warning: This is beta-quality software. Do not use it in a production or publication environment.**
 
 All results are currently filtered by relevance by Twitter before sentiment analysis, meaning all aggregate sentiment scores reflect the sentiment of tweets considered relevant by Twitter's API, not the universe of possible tweets matching your search term.
 

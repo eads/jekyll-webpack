@@ -50707,6 +50707,10 @@ var SentimentResults = function (_Component) {
         return d.pct;
       }).pct + 5;
 
+      var keywords = summary.keywords.map(function (word) {
+        return word[0] + ' (' + word[1] + ')';
+      }).join(', ');
+
       return _react2.default.createElement(
         'div',
         { className: 'searching-' + this.props.searching },
@@ -50800,8 +50804,24 @@ var SentimentResults = function (_Component) {
         _react2.default.createElement(
           'p',
           { className: 'total' },
-          'Total tweets: ',
+          _react2.default.createElement(
+            'strong',
+            null,
+            'Total tweets:'
+          ),
+          ' ',
           data.length
+        ),
+        _react2.default.createElement(
+          'p',
+          { className: 'total' },
+          _react2.default.createElement(
+            'strong',
+            null,
+            'Keywords:'
+          ),
+          ' ',
+          keywords
         ),
         _react2.default.createElement(_reactTable2.default, {
           data: data,
