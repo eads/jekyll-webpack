@@ -11,8 +11,8 @@
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i|Open+Sans:400,400i,700,700i">
   <link rel="stylesheet" href="css/main.css">
-  <link rel="canonical" href="http://TK/">
-  <link rel="alternate" type="application/rss+xml" title="Twitter sentiment search" href="http://TK/feed.xml">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Twitter sentiment search" href="http://localhost:4000/feed.xml">
 </head>
 
   <body>
@@ -28,13 +28,41 @@
 
 <p>Enter a search and get back tweets with VADER and AFINN sentiment analysis applied.</p>
 
-<p><em><strong>Warning:</strong> This is beta-quality software. Do not use it in a production environment. At the very least, you’ll need an enhanced Twitter API key to access archival material. All results are currently filtered by relevance by Twitter before sentiment analysis, meaning all aggregate sentiment scores reflect the sentiment of tweets considered relevant by Twitter’s API, not the universe of possible tweets matching your search term. See the <a href="https://github.com/eads/sentiment-search">Github repository</a> for more information.</em></p>
+<p><strong>Twitter Sentiment Search</strong> is a tool created to help journalists to understand the emotional inclinations around certain topics on Twitter. This tool uses two different systems: <a href="http://www2.imm.dtu.dk/pubdb/views/edoc_download.php/6006/pdf/imm6006.pdf">AFINN</a> and <a href="http://comp.social.gatech.edu/papers/icwsm14.vader.hutto.pdf">VADER</a> to analyze up to 1,000 of the latests more relevant tweets, according to the Twitter API.</p>
 
-<p><strong>Twitter Sentiment Search</strong> is a tool created to help journalists to understand the emotional inclinations around certain topics on Twitter. This tool uses two different systems: <a href="http://www2.imm.dtu.dk/pubdb/views/edoc_download.php/6006/pdf/imm6006.pdf">AFINN</a> and <a href="http://comp.social.gatech.edu/papers/icwsm14.vader.hutto.pdf">VADER</a> to analyze up to 1000 of the latests more relevant tweets, according to the Twitter API.</p>
+<p>In this first stage of <strong>Twitter Sentiment Search</strong> users can see the graphic results of their search in both systems. We have also included the option to download the results in a CSV file to allow journalists to run their own analysis.</p>
 
-<p>In this first stage of <strong>Twitter Sentiment Search</strong> users can see the graphic results of their search in both systems. We have also included the option to download the results in a CSV file, a resource that will allow journalists to run their own analysis.</p>
+<h2 id="warning-not-for-production-use">Warning: Not for production use</h2>
+
+<p>_<strong>Warning:</strong> This is beta-quality software. Do not use it in a production environment.** At the very least, you’ll need an enhanced Twitter API key to access archival material.</p>
+
+<p>All results are currently filtered by relevance by Twitter before sentiment analysis, meaning all aggregate sentiment scores reflect the sentiment of tweets considered relevant by Twitter’s API, not the universe of possible tweets matching your search term.</p>
+
+<p>If you want to use this software to analyze Tweets for publication, you will need at least a <a href="https://developer.twitter.com/en/pricing">premium Twitter API key</a>.</p>
+
+<p>If you’d like to know more about installing or using this tool in a production environment, <a href="https://github.com/eads/sentiment-search/issues">create an issue</a>.</p>
+
+<p>If you’d like to modify this software for production use, we’d be delighted. See the <a href="https://github.com/eads/sentiment-search">Github repository</a> for more information.</p>
 
 <p>Want to get in touch? <a href="https://github.com/eads/sentiment-search/issues">Leave an issue on Github</a>.</p>
+
+<h2 id="credits">Credits</h2>
+
+<p>Created by:</p>
+
+<ul>
+  <li>Barbara Maseda</li>
+  <li>Mago Torres</li>
+  <li>Amy Shen</li>
+  <li><a href="https://twitter.com/eads">David Eads</a></li>
+</ul>
+
+<h2 id="code">Code</h2>
+
+<p>The client builds on Alli Zadronzy’s wonderful tutorial, <a href="https://medium.com/@allizadrozny/using-webpack-and-react-with-jekyll-cfe137f8a2cc">Using Webpack and React with Jekyll</a> with <a href="https://github.com/whatsnewsaes/Skeleton-Sass">Skeleton</a> and <a href="http://recharts.org/">Recharts</a>.</p>
+
+<p>The backend uses C.J. Hutto’s <a href="https://github.com/cjhutto/vaderSentiment">Vader Sentiment</a> library, Finn Nielsen’s <a href="https://github.com/fnielsen/afinn">AFINN</a> library, and <a href="https://serverless.com/">Serverless</a> to apply sentiment analysis to Twitter search results.</p>
+
 
       </div>
     <script type="text/javascript" src="assets/javascripts/bundle.js" charset="utf-8"></script>
