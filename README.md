@@ -1,5 +1,17 @@
 # Twitter Sentiment
 
+Apply sentiment analysis to Twitter search results.
+
+[See the demo](https://eads.github.io/sentiment-search/).
+
+## Warning! This software is not production-ready
+
+**This code is not ready for production use.**
+
+If you want to use this software to analyze Tweets for publication, you will need at least a [premium Twitter API key](https://developer.twitter.com/en/pricing).
+
+If you'd like to know more about installing or using this tool in a production environment, [create an issue](https://github.com/eads/sentiment-search/issues).
+
 ## Requirements
 
 * Ruby (`brew install ruby`)
@@ -39,22 +51,17 @@ git commit -m "built site"
 git subtree push --prefix public origin gh-pages
 ```
 
-## Based on the greak work of Alli Zadronzny
+## Credits
 
-_Kept from original README_.
+Created by:
 
-So you can have your React and serve it statically, too. Plugin-free!
+* Barbara Maseda
+* Mago Torres
+* Amy Shen
+* [David Eads](https://twitter.com/eads)
 
-Are you working with Github pages? See the gh-pages branch:
+## Code
 
-- https://github.com/allizad/jekyll-webpack/tree/gh-pages
+The client builds on Alli Zadronzy's wonderful tutorial, [Using Webpack and React with Jekyll](https://medium.com/@allizadrozny/using-webpack-and-react-with-jekyll-cfe137f8a2cc) with [Skeleton](https://github.com/whatsnewsaes/Skeleton-Sass) and [Recharts](http://recharts.org/).
 
-You can learn more about how this was put together in my walkthrough post here:
-- [Using Webpack and React with Jekyll](https://medium.com/@allizadrozny/using-webpack-and-react-with-jekyll-cfe137f8a2cc)
-
-See the full series of adding search to Jekyll, for which this project was a building block, here:
-- [Elasticsearch for Jekyll, Part 1](https://blog.omc.io/elasticsearch-for-jekyll-part-1-ab456ac7c093)
-
-Woohoo! Now go build shit!
-
-![cat image](https://i0.wp.com/www.developermemes.com/wp-content/uploads/2015/10/Now-That-You-Have-That-Feature-Done-I-Want-It-To-Do-Something-Else-Instead-Web-Developer-Meme.jpg?resize=385%2C232)
+The backend uses C.J. Hutto's [Vader Sentiment](https://github.com/cjhutto/vaderSentiment) library, Finn Nielsen's [AFINN](https://github.com/fnielsen/afinn) library, and [Serverless](https://serverless.com/) to apply sentiment analysis to Twitter search results.
